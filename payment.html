@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pago | Angely Crochet</title>
+    <style>
+        :root {
+            --cafe-oscuro: #4A2E1B;
+            --cafe-medio: #7A5230;
+            --naranja: #E66127;
+            --naranja-claro: #FFA876;
+            --beige: #FDF8F2;
+            --beige-tarjeta: #F4EAD8;
+            --blanco: #FFFFFF;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            min-height: 100vh;
+            margin: 0;
+            display: grid;
+            place-items: center;
+            padding: 24px;
+            color: var(--cafe-oscuro);
+            background-color: var(--beige);
+            background-image: radial-gradient(var(--cafe-medio) 0.5px, transparent 0.5px), radial-gradient(var(--cafe-medio) 0.6px, var(--beige) 0.75px);
+            background-size: 30px 30px;
+            background-position: 0 0, 15px 15px;
+            font-family: "Segoe UI", Tahoma, sans-serif;
+        }
+
+        .payment-card {
+            width: min(100%, 520px);
+            padding: 34px;
+            background: var(--blanco);
+            border: 2px solid var(--beige-tarjeta);
+            border-radius: 22px;
+            box-shadow: 0 18px 45px rgba(74, 46, 27, 0.14);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .payment-card::before {
+            content: "";
+            position: absolute;
+            inset: 0 0 auto;
+            height: 8px;
+            background: repeating-linear-gradient(90deg, var(--naranja) 0 18px, var(--naranja-claro) 18px 36px);
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 22px;
+            font-weight: 700;
+            color: var(--cafe-medio);
+        }
+
+        .brand-mark {
+            width: 42px;
+            height: 42px;
+            display: grid;
+            place-items: center;
+            border: 2px solid var(--naranja);
+            border-radius: 50%;
+            background: var(--naranja-claro);
+            font-size: 22px;
+        }
+
+        h1 { margin: 0 0 8px; font-size: clamp(1.6rem, 5vw, 2.2rem); }
+        .intro { margin: 0 0 24px; color: var(--cafe-medio); line-height: 1.6; }
+
+        .order-summary {
+            margin-bottom: 24px;
+            padding: 16px;
+            border-left: 4px solid var(--naranja);
+            background: #fff8ed;
+        }
+
+        .order-summary strong { display: block; margin-bottom: 6px; }
+        #order-items { margin: 0; padding-left: 20px; color: var(--cafe-medio); font-size: 0.93rem; }
+        .total { margin-top: 12px; font-size: 1.15rem; font-weight: 700; }
+
+        label { display: block; margin-bottom: 8px; font-weight: 700; }
+        select, input {
+            width: 100%;
+            min-height: 48px;
+            padding: 12px 14px;
+            border: 1px solid #d8c5ae;
+            border-radius: 10px;
+            background: var(--blanco);
+            color: var(--cafe-oscuro);
+            font: inherit;
+        }
+
+        .field { margin-bottom: 18px; }
+        input:focus, select:focus { outline: 3px solid rgba(230, 97, 39, 0.2); border-color: var(--naranja); }
+        button {
+            width: 100%;
+            min-height: 50px;
+            border: 0;
+            border-radius: 10px;
+            background: var(--naranja);
+            color: var(--blanco);
+            font: inherit;
+            font-weight: 700;
+            cursor: pointer;
+        }
+        button:hover { background: var(--cafe-oscuro); }
+        .back { display: block; margin-top: 16px; text-align: center; color: var(--cafe-medio); font-size: 0.92rem; }
+        .note { margin: 18px 0 0; color: #806b58; font-size: 0.82rem; line-height: 1.5; text-align: center; }
+
+        @media (max-width: 480px) {
+            body { padding: 12px; }
+            .payment-card { padding: 28px 20px; }
+        }
+    </style>
+</head>
+<body>
+    <main class="payment-card">
+        <div class="brand"><span class="brand-mark">&#9825;</span> Angely Crochet</div>
+        <h1>Completa tu pago</h1>
+        <p class="intro">Elige el m&eacute;todo y agrega el n&uacute;mero de contacto o cuenta que usar&aacute;s para pagar.</p>
+
+        <section class="order-summary" aria-label="Resumen del pedido">
+            <strong>Resumen del pedido</strong>
+            <ul id="order-items"></ul>
+            <div class="total">Total: $<span id="order-total">0.000</span></div>
+        </section>
+
+        <form id="payment-form">
+            <div class="field">
+                <label for="payment-method">M&eacute;todo de pago</label>
+                <select id="payment-method" required>
+                    <option value="Nequi">Nequi</option>
+                    <option value="Daviplata">Daviplata</option>
+                    <option value="Bancolombia">Bancolombia</option>
+                    <option value="PSE">PSE</option>
+                    <option value="Efectivo">Efectivo</option>
+                    <option value="Transferencia">Transferencia</option>
+                </select>
+            </div>
+            <div class="field">
+                <label for="payment-number">N&uacute;mero de pago</label>
+                <input id="payment-number" type="tel" inputmode="numeric" autocomplete="tel" placeholder="Ej. 3112567722" required>
+            </div>
+            <button type="submit">Continuar por WhatsApp</button>
+        </form>
+        <a class="back" href="index.html">Volver a la tienda</a>
+        <p class="note">No compartas claves, c&oacute;digos de seguridad ni contrase&ntilde;as. Solo solicitamos el n&uacute;mero para coordinar tu pago.</p>
+    </main>
+
+    <script>
+        const params = new URLSearchParams(window.location.search);
+        const methodParam = params.get('method');
+        const amountParam = Number(params.get('amount'));
+        const itemsParam = params.get('items');
+        const methodSelect = document.getElementById('payment-method');
+        const orderItems = document.getElementById('order-items');
+        const orderTotal = document.getElementById('order-total');
+        const paymentForm = document.getElementById('payment-form');
+
+        if (methodParam && [...methodSelect.options].some(option => option.value === methodParam)) {
+            methodSelect.value = methodParam;
+        }
+
+        if (Number.isFinite(amountParam)) orderTotal.textContent = amountParam.toFixed(3);
+
+        try {
+            const decodedItems = decodeURIComponent(itemsParam || '[]');
+            const items = JSON.parse(decodedItems);
+            items.forEach(item => {
+                const listItem = document.createElement('li');
+                listItem.textContent = `${item.name} - $${Number(item.price).toFixed(3)}`;
+                orderItems.appendChild(listItem);
+            });
+        } catch (error) {
+            const listItem = document.createElement('li');
+            listItem.textContent = 'Pedido de Angely Crochet';
+            orderItems.appendChild(listItem);
+        }
+
+        paymentForm.addEventListener('submit', event => {
+            event.preventDefault();
+            const method = methodSelect.value;
+            const paymentNumber = document.getElementById('payment-number').value.trim();
+            const message = `Hola Angely Crochet, quiero pagar con ${method}.\nNumero de pago: ${paymentNumber}\nTotal: $${Number.isFinite(amountParam) ? amountParam.toFixed(3) : '0.000'}`;
+            window.open(`https://wa.me/573112567722?text=${encodeURIComponent(message)}`, '_blank');
+        });
+    </script>
+</body>
+</html>
